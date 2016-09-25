@@ -1,6 +1,6 @@
 (function() {
     
-var SETTINGS_GRAVITY = 0.10,
+var SETTINGS_GRAVITY = 0.50,
     SETTINGS_FPS = 30,
     SETTINGS_BALL_NUM = 1,
     SETTINGS_BOUND_X = 0.13,
