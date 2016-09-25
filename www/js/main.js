@@ -307,6 +307,12 @@ function init() {
     window.addEventListener("touchmove", function(e) {
         BB.paddle.position.x = e.touches[0].clientX / BB.screenSize.zoom;
     });
+
+    // Event listeners to control the paddle
+    window.addEventListener("touchend", function(e) {
+        BB.paddle.position.x = 0;
+    });
+
     
     window.addEventListener("mousedown", function(e) {
         BB.isMouseDown = true;
