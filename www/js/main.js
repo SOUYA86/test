@@ -250,8 +250,8 @@ var BB = {
         BB.stage.addChild(BB.accelLabel);
         */
 
-BB.testLabel = new PIXI.Text("aaaaaaaaaa", {font: "24px/1.2 vt", fill: "white"});
-        BB.testLabel.position.x =180;
+BB.testLabel = new PIXI.Text("aaaaaaaaaa", {font: "9px/1.2 vt", fill: "white"});
+        BB.testLabel.position.x =0;
         BB.testLabel.position.y = 40;
         BB.stage.addChild(BB.testLabel);
         
