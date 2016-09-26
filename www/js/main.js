@@ -37,6 +37,7 @@ var BB = {
     score: 0,
     scoreLabel: null,
     accelLabel: null,
+    testLabel: null,
     isMouseDown: false,
     
     // Create blocks map
@@ -248,6 +249,11 @@ var BB = {
         BB.accelLabel.position.y = 20;
         BB.stage.addChild(BB.accelLabel);
         */
+
+BB.testLabel = new PIXI.Text("aaaaaaaaaa", {font: "24px/1.2 vt", fill: "white"});
+        BB.testLabel.position.x =180;
+        BB.testLabel.position.y = 40;
+        BB.stage.addChild(BB.testLabel);
         
         BB.gameState = GAMESTATE_PLAY;
     },
