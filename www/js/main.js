@@ -22,7 +22,7 @@ var imgPath = {
     'block_red' : 'img/block_red.png',
     'block_green' : 'img/block_green.png',
     'block_blue' : 'img/block_blue.png',
-    'block_silver' : 'img/block_silver.png',
+    'block_silver' : 'img/block_silver.png', 
     'block_gold' : 'img/block_gold.png'
 };
     
