@@ -392,6 +392,11 @@ window.addEventListener("devicemotion", function(evt){
     var z = evt.acceleration.z;
 
 
+BB.xL += x;
+BB.yL += y;
+BB.zL += z;
+
+
     //傾き
     var xg = evt.accelerationIncludingGravity.x;
     var yg = evt.accelerationIncludingGravity.y;
