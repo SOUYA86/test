@@ -369,7 +369,7 @@ window.addEventListener("touchmove", function(e) {
         BB.paddle.position.x = e.touches[0].clientX / BB.screenSize.zoom;
     });
 
-window.addEventListener("DeviceOrientation", function(evt) {
+window.addEventListener("deviceo'rientation", function(evt) {
 
     //回転値
     var a = evt.alpha; //z方向
