@@ -37,7 +37,15 @@ var BB = {
     score: 0,
     scoreLabel: null,
     accelLabel: null,
-    testLabel: null,
+    xLabel: null,
+    yLabel: null,
+    zLabel: null,
+    gxLabel: null,
+    gyLabel: null,
+    gzLabel: null,
+    rxLabel: null,
+    ryLabel: null,
+    rzLabel: null,
     isMouseDown: false,
     
     // Create blocks map
@@ -250,11 +258,51 @@ var BB = {
         BB.stage.addChild(BB.accelLabel);
         */
 
-BB.testLabel = new PIXI.Text("aaaaaaaaaa", {font: "9px/1.2 vt", fill: "white"});
-        BB.testLabel.position.x =0;
-        BB.testLabel.position.y = 40;
-        BB.stage.addChild(BB.testLabel);
-        
+BB.xLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.xLabel.position.x =0;
+BB.xLabel.position.y = 40;
+BB.stage.addChild(BB.xLabel);
+
+BB.yLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.yLabel.position.x =0;
+BB.yLabel.position.y = 60;
+BB.stage.addChild(BB.yLabel);
+
+BB.zLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.zLabel.position.x =0;
+BB.zLabel.position.y = 80;
+BB.stage.addChild(BB.zLabel);
+
+BB.gxLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.gxLabel.position.x =0;
+BB.gxLabel.position.y =100;
+BB.stage.addChild(BB.gxLabel);
+
+BB.gyLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.gyLabel.position.x =0;
+BB.gyLabel.position.y = 120;
+BB.stage.addChild(BB.gyLabel);
+
+BB.gzLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.gzLabel.position.x =0;
+BB.gzLabel.position.y = 140;
+BB.stage.addChild(BB.gzLabel);
+
+BB.rxLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.rxLabel.position.x =0;
+BB.rxLabel.position.y = 160;
+BB.stage.addChild(BB.rxLabel);
+
+BB.ryLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.ryLabel.position.x =0;
+BB.ryLabel.position.y = 180;
+BB.stage.addChild(BB.ryLabel);
+
+BB.rzLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
+BB.rzLabel.position.x =0;
+BB.rzLabel.position.y = 200;
+BB.stage.addChild(BB.rzLabel);
+
         BB.gameState = GAMESTATE_PLAY;
     },
     
@@ -334,20 +382,18 @@ window.addEventListener("devicemotion", function(evt){
     var b = evt.rotationRate.beta; //x方向
     var g = evt.rotationRate.gamma; // y方向
 
-    var txt  = "x:"+x+"<br>";
-        txt += "y:"+y+"<br>";
-        txt += "z:"+z+"<br>";
 
-        txt += "傾きx:"+xg+"<br>";
-        txt += "傾きy:"+yg+"<br>";
-        txt += "傾きz:"+zg+"<br>";
+BB.xLabel.setText("x:"+x);
+BB.yLabel.setText("y:"+y);
+BB.zLabel.setText("z:"+z);
 
-        txt += "alpha(z):"+a+"<br>";
-        txt += "beta(x):"+b+"<br>";
-        txt += "gamma(y):"+g+"<br>";
+BB.gxLabel.setText("傾きx:"+xg);
+BB.gyLabel.setText("傾きy:"+yg);
+BB.gzLabel.setText("傾きz:"+zg);
 
-    console.log(txt);
-BB.testLabel.setText(txt);
+BB.rxLabel.setText("alpha(z):"+a);
+BB.ryLabel.setText("beta(x):"+b);
+BB.rzLabel.setText("gamma(y):"+g);
 
 }, true);
 
