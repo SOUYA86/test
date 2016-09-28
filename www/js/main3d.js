@@ -1,3 +1,4 @@
+(function() {
 
 function init() {
   var scene = new THREE.Scene();
@@ -32,15 +33,9 @@ function init() {
       mesh.rotation.z + .01
     );
     renderer.render( scene, camera );
-<<<<<<< HEAD
-  }
-  )
-}
-=======
     } )();
 }
 
->>>>>>> 3c86d549177fcec09426e00526aa972a1a8c46c0
 window.onload = function() {
     if(getUa() === false) init();
     else document.addEventListener("deviceready", init, false);
