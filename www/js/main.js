@@ -46,9 +46,9 @@ var BB = {
     rxLabel: null,
     ryLabel: null,
     rzLabel: null,
-    xL: 0,
-    yL: 0,
-    zL: 0,
+    xL: 0.00,
+    yL: 0.00,
+    zL: 0.00,
     rxL: 0,
     ryL: 0,
     rzL: 0,
@@ -392,10 +392,6 @@ window.addEventListener("devicemotion", function(evt){
 BB.xLabel.setText("x:"+x);
 BB.yLabel.setText("y:"+y);
 BB.zLabel.setText("z:"+z);
-
-BB.xL = BB.xL + x;
-BB.yL = BB.yL + y;
-BB.zL = BB.zL + z;
 
 BB.gxLabel.setText("xL:"+BB.xL);
 BB.gyLabel.setText("yL:"+BB.yL);
