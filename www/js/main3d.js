@@ -33,7 +33,8 @@ function init() {
       mesh.rotation.z + .01
     );
     renderer.render( scene, camera );
-  }
+    } )();
+}
 
 window.onload = function() {
     if(getUa() === false) init();
