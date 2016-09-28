@@ -397,9 +397,9 @@ BB.xL = BB.xL + x;
 BB.yL = BB.yL + y;
 BB.zL = BB.zL + z;
 
-BB.gxLabel.setText("xL:"+xL);
-BB.gyLabel.setText("yL:"+yL);
-BB.gzLabel.setText("zL:"+zL);
+BB.gxLabel.setText("xL:"+BB.xL);
+BB.gyLabel.setText("yL:"+BB.yL);
+BB.gzLabel.setText("zL:"+BB.zL);
 
 BB.rxLabel.setText("alpha(z):"+a);
 BB.ryLabel.setText("beta(x):"+b);
