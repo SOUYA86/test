@@ -1,4 +1,3 @@
-(function() {
 
 function init() {
   var scene = new THREE.Scene();
@@ -34,7 +33,8 @@ function init() {
     );
     renderer.render( scene, camera );
   }
-
+  )
+}
 window.onload = function() {
     if(getUa() === false) init();
     else document.addEventListener("deviceready", init, false);
