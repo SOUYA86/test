@@ -46,6 +46,12 @@ var BB = {
     rxLabel: null,
     ryLabel: null,
     rzLabel: null,
+    xL: 0,
+    yL: 0,
+    zL: 0,
+    rxL: 0,
+    ryL: 0,
+    rzL: 0,
     isMouseDown: false,
     
     // Create blocks map
@@ -387,9 +393,13 @@ BB.xLabel.setText("x:"+x);
 BB.yLabel.setText("y:"+y);
 BB.zLabel.setText("z:"+z);
 
-BB.gxLabel.setText("傾きx:"+xg);
-BB.gyLabel.setText("傾きy:"+yg);
-BB.gzLabel.setText("傾きz:"+zg);
+BB.xL = xL + x;
+BB.yL = yL + y;
+BB.zL = zL + z;
+
+BB.gxLabel.setText("xL:"+xL);
+BB.gyLabel.setText("yL:"+yL);
+BB.gzLabel.setText("zL:"+zL);
 
 BB.rxLabel.setText("alpha(z):"+a);
 BB.ryLabel.setText("beta(x):"+b);
