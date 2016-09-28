@@ -393,9 +393,9 @@ BB.xLabel.setText("x:"+x);
 BB.yLabel.setText("y:"+y);
 BB.zLabel.setText("z:"+z);
 
-BB.xL = xL + x;
-BB.yL = yL + y;
-BB.zL = zL + z;
+BB.xL = BB.xL + x;
+BB.yL = BB.yL + y;
+BB.zL = BB.zL + z;
 
 BB.gxLabel.setText("xL:"+xL);
 BB.gyLabel.setText("yL:"+yL);
