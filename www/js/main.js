@@ -46,9 +46,9 @@ var BB = {
     rxLabel: null,
     ryLabel: null,
     rzLabel: null,
-    xL: 0,
-    yL: 0,
-    zL: 0,
+    xL: 0.00,
+    yL: 0.00,
+    zL: 0.00,
     rxL: 0,
     ryL: 0,
     rzL: 0,
@@ -369,6 +369,20 @@ window.addEventListener("touchmove", function(e) {
         BB.paddle.position.x = e.touches[0].clientX / BB.screenSize.zoom;
     });
 
+window.addEventListener("DeviceOrientation", function(evt) {
+
+    //回転値
+    var a = evt.alpha; //z方向
+    var b = evt.beta; //x方向
+    var g = evt.gamma; // y方向
+
+
+BB.rxLabel.setText("alpha(z):"+a);
+BB.ryLabel.setText("beta(x):"+b);
+BB.rzLabel.setText("gamma(y):"+g);
+
+    });
+
 
 window.addEventListener("devicemotion", function(evt){
 
@@ -383,27 +397,18 @@ window.addEventListener("devicemotion", function(evt){
     var yg = evt.accelerationIncludingGravity.y;
     var zg = evt.accelerationIncludingGravity.z;
 
-    //回転値
-    var a = evt.rotationRate.alpha; //z方向
-    var b = evt.rotationRate.beta; //x方向
-    var g = evt.rotationRate.gamma; // y方向
+
 
 
 BB.xLabel.setText("x:"+x);
 BB.yLabel.setText("y:"+y);
 BB.zLabel.setText("z:"+z);
 
-BB.xL = BB.xL + x;
-BB.yL = BB.yL + y;
-BB.zL = BB.zL + z;
-
 BB.gxLabel.setText("xL:"+BB.xL);
 BB.gyLabel.setText("yL:"+BB.yL);
 BB.gzLabel.setText("zL:"+BB.zL);
 
-BB.rxLabel.setText("alpha(z):"+a);
-BB.ryLabel.setText("beta(x):"+b);
-BB.rzLabel.setText("gamma(y):"+g);
+
 
 }, true);
 
