@@ -10,7 +10,7 @@ var scene = new THREE.Scene();
   var near   = 1;
   var far    = 1000;
   var camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
-  camera.position.set( 0, 0, 50 );
+  camera.position.set( 0, 0, 400 );
  
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize( width, height );
@@ -20,7 +20,7 @@ var scene = new THREE.Scene();
   directionalLight.position.set( 0, 0.7, 0.7 );
   scene.add( directionalLight );
  
-  var geometry = new THREE.CubeGeometry( 30, 30, 30 );
+  var geometry = new THREE.CubeGeometry( 20, 50, 5 );
   var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
   var mesh = new THREE.Mesh( geometry, material );
   scene.add( mesh );
