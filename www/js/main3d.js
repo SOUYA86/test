@@ -2,9 +2,9 @@
 
 function init() {
 var scene = new THREE.Scene();
- 
-  var width  = 600;
-  var height = 400;
+
+  var width  = 320;
+  var height = 460;
   var fov    = 60;
   var aspect = width / height;
   var near   = 1;
