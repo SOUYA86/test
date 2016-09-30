@@ -28,11 +28,16 @@ var scene = new THREE.Scene();
   var geometry2 = new THREE.CubeGeometry( 800, 800, 5 );
   var material2 = new THREE.MeshPhongMaterial( { color: 0x0000ff } );
   var mesh2 = new THREE.Mesh( geometry2, material2 );
+<<<<<<< HEAD
 meth2.setZ(800);
   scene.add( mesh2 );
 
 
 
+=======
+meth2.position.setZ(800);
+  scene.add( mesh2 );
+>>>>>>> 09fdc2f1dc8e1f686af8dbb997c44175d8b702f4
 
 window.addEventListener("deviceorientation", function(evt) {
 
