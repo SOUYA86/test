@@ -1,10 +1,12 @@
 (function() {
 
 function init() {
+  var bound = setBound();
+
   var scene = new THREE.Scene();
  
-  var width  = 600;
-  var height = 400;
+  var width  = bound.width;
+  var height = bound.height;
   var fov    = 60;
   var aspect = width / height;
   var near   = 1;
