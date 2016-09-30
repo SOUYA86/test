@@ -32,6 +32,10 @@ var scene = new THREE.Scene();
       mesh.rotation.y + .01,
       mesh.rotation.z + .01
     );
+
+camera.rotation.order = "ZXY"
+camera.rotation.x = 0.3;
+
     renderer.render( scene, camera );
   } )();
 }
