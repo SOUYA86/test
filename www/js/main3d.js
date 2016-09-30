@@ -30,9 +30,9 @@ window.addEventListener("deviceorientation", function(evt) {
 
 
 camera.rotation.order = "ZXY";
-camera.rotation.x = evt.beta;
-camera.rotation.y = evt.gamma;
-camera.rotation.z = evt.alpha;
+camera.rotation.x = evt.beta / 6.28;
+camera.rotation.y = evt.gamma / 6.28;
+camera.rotation.z = evt.alpha / 6.28;
 
 
     });
