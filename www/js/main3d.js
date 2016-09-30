@@ -24,6 +24,20 @@ var scene = new THREE.Scene();
   var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
   var mesh = new THREE.Mesh( geometry, material );
   scene.add( mesh );
+
+
+window.addEventListener("deviceorientation", function(evt) {
+
+
+camera.rotation.order = "ZXY";
+camera.rotation.x = evt.beta;
+camera.rotation.y = evt.gamma;
+camera.rotation.z = evt.alpha;
+
+
+    });
+
+
  
   ( function renderLoop () {
     requestAnimationFrame( renderLoop );
@@ -32,9 +46,6 @@ var scene = new THREE.Scene();
       mesh.rotation.y + .01,
       mesh.rotation.z + .01
     );
-
-camera.rotation.order = "ZXY"
-camera.rotation.x = 0.3;
 
     renderer.render( scene, camera );
   } )();
