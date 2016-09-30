@@ -25,9 +25,10 @@ var scene = new THREE.Scene();
   var mesh = new THREE.Mesh( geometry, material );
   scene.add( mesh );
 
-  var geometry2 = new THREE.CubeGeometry( 300, 300, 5 );
+  var geometry2 = new THREE.CubeGeometry( 3000, 3000, 5 );
   var material2 = new THREE.MeshPhongMaterial( { color: 0x0000ff } );
   var mesh2 = new THREE.Mesh( geometry2, material2 );
+meth.setZ(1000);
   scene.add( mesh2 );
 
 
