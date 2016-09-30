@@ -25,6 +25,13 @@ var scene = new THREE.Scene();
   var mesh = new THREE.Mesh( geometry, material );
   scene.add( mesh );
 
+  var geometry2 = new THREE.CubeGeometry( 300, 300, 5 );
+  var material2 = new THREE.MeshPhongMaterial( { color: 0x0000ff } );
+  var mesh2 = new THREE.Mesh( geometry2, material2 );
+  scene.add( mesh2 );
+
+
+
 
 window.addEventListener("deviceorientation", function(evt) {
 
@@ -41,11 +48,6 @@ camera.rotation.z = evt.alpha / 6.28;
  
   ( function renderLoop () {
     requestAnimationFrame( renderLoop );
-    mesh.rotation.set(
-      0,
-      mesh.rotation.y + .01,
-      mesh.rotation.z + .01
-    );
 
     renderer.render( scene, camera );
   } )();
