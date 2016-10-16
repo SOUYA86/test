@@ -46,8 +46,6 @@ var BB = {
     rxLabel: null,
     ryLabel: null,
     rzLabel: null,
-    gpsxLabel: null,
-    gpsyLabel: null,    
     xL: 0.00,
     yL: 0.00,
     zL: 0.00,
@@ -64,9 +62,7 @@ var BB = {
     bay: 0,
     baz: 0,
     cnt:0,
-    t: 0,
-    t1 : 0,
-    t2 : 0,
+    t: new Date(),
     isMouseDown: false,
     
     // Reset current game and start new one
@@ -117,17 +113,6 @@ BB.rzLabel.position.x =0;
 BB.rzLabel.position.y = 200;
 BB.stage.addChild(BB.rzLabel);
 
-BB.gpsxLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
-BB.gpsxLabel.position.x =0;
-BB.gpsxLabel.position.y = 220;
-BB.stage.addChild(BB.gpsxLabel);
-
-BB.gpsyLabel = new PIXI.Text("aaaaaaaaaa", {font: "12px/1.2 vt", fill: "white"});
-BB.gpsyLabel.position.x =0;
-BB.gpsyLabel.position.y = 240;
-BB.stage.addChild(BB.gpsyLabel);
-
-
         BB.gameState = GAMESTATE_PLAY;
     }
 }
@@ -158,109 +143,32 @@ function init() {
     
     // Event listeners to control the paddle
     
-    // window.addEventListener("devicemotion", successMot, true);
-
-    var optionmot = {
-            "frequency": 10
-    };
+    window.addEventListener("devicemotion", function(evt){  
     
-    navigator.accelerometer.watchAcceleration(successMot2, errorFunc, optionmot );
-
-
-
-    /*var optionObj = {
-        "enableHighAccuracy": false ,
-	    "timeout": 1000000 ,
-	    "maximumAge": 0 ,
-    } ;
-
-    // 現在位置を取得する
-    //navigator.geolocation.watchPosition( successFunc , errorFunc , optionObj ) ;
-    */
-    requestAnimFrame(animate);
-}
-
-
-function sgn(i) {
-    if(i > 0){
-        return 1;
-    }
-    if(i < 0){
-        return -1;
-    }
-    return 0;
-}
-
-function calcV(a0, a1, a2, t){    
-    var k1 = (a2 -2*a1 + a0) / (2*(t)*(t));
-    var k2 = (a2 -4*a1 + 3*a0) / (2*(t));
-    
-    var result = k1/3*(-t)*(-t)*(-t) + k2/2*(-t)*(-t) + a0*(-t); 
-    
-    return - result;
-}
-
-function calcL(a0, a1, a2, v0, t){    
-    var k1 = (a2 -2*a1 + a0) / (2*(t)*(t));
-    var k2 = (a2 -4*a1 + 3*a0) / (2*(t));
-    
-    var result = k1/12*(-t)*(-t)*(-t)*(-t) + k2/6*(-t)*(-t)*(-t) + a0/2*(-t)*(-t) + v0*(-t); 
-    
-    return - result;
-}
-
-
-function successFunc( position ) {
-    BB.gpsxLabel.setText("lat:"+position.coords.latitude+": lon:"+position.coords.longitude);
-    BB.gpsyLabel.setText(BB.cnt+":"+position.coords.speed);
-}
-
-function errorFunc( position ) {
-    
-}
-
-function successMot2(evt){  
-    
-        //var now = new Date();
-        //var t = (now - BB.t)/1000;
-        var now = evt.timestamp;
-        var t =  (now - BB.t)/1000;
+        var now = new Date();
+        var t = (now - BB.t)/1000;
         
-        //console.log( t );
-        
-        if( true ) {
+        if( t > 0.05) {
         
         BB.t = now;
 
-        var x = evt.x;
-        var y = evt.y;
-        var z = evt.z;
-        
-        var f = 0.15;
-        
-        BB.bax = x * f + BB.bax * (1-f);
-        BB.bay = y * f + BB.bay * (1-f);
-        BB.baz = z * f + BB.baz * (1-f);
-        
-        x = x - BB.bax;
-        y = y - BB.bay;
-        z = z - BB.baz;
-
-        
-        var sh = 0.0098;
+        //生の値はブレが大きいので桁数を絞る
+        var x = evt.acceleration.x;
+        var y = evt.acceleration.y;
+        var z = evt.acceleration.z;
         
         
-        if (Math.abs(x) < sh){
-          x = - sgn(BB.vx)*sh;  
-          //BB.vx = BB.vx * 0.9;
+        if (Math.abs(x) < 0.098){
+          x = - sgn(BB.vx)*0.098;  
+          BB.vx = BB.vx * 0.9;
         } 
-        if (Math.abs(y) < sh ){
-          y = - sgn(BB.vy)*sh;
-          //BB.vy = BB.vy * 0.9;
+        if (Math.abs(y) < 0.098 ){
+          y = - sgn(BB.vy)*0.098;
+          BB.vy = BB.vy * 0.9;
         }
-        if (Math.abs(z) < sh ){
-          z = - sgn(BB.vz)*sh;
-          //BB.vz = BB.vz * 0.9;
+        if (Math.abs(z) < 0.098 ){
+          z = - sgn(BB.vz)*0.098;
+          BB.vz = BB.vz * 0.9;
         }
         
         //今回値の計算
@@ -311,7 +219,7 @@ function successMot2(evt){
             BB.ryLabel.setText("vy:"+BB.vy);  
             BB.rzLabel.setText("vz:"+BB.vz);
             
-            //console.log(BB.cnt+":  ax:"+Math.round(ax0*1000)+": ay:"+Math.round(ay0*1000)+": az:"+Math.round(az0*1000)+":  vx:"+Math.round(BB.vx*1000)+": vy:"+Math.round(BB.vy*1000)+": vz:"+Math.round(BB.vz*1000)+":  x:"+Math.round(BB.xL*1000)+": y:"+Math.round(BB.yL*1000)+": z:"+Math.round(BB.zL*1000));
+            console.log(BB.cnt+":  ax:"+Math.round(ax0*1000)+": ay:"+Math.round(ay0*1000)+": az:"+Math.round(az0*1000));
             
         
         }
@@ -323,14 +231,42 @@ function successMot2(evt){
         BB.ax1 = ax0;
         BB.ay1 = ay0;
         BB.az1 = az0;
-        
-        BB.t2 = BB.t1;
-        BB.t1 = t;
 
         }
 
-    }
+    }, true);
 
+    requestAnimFrame(animate);
+}
+
+
+function sgn(i) {
+    if(i > 0){
+        return 1;
+    }
+    if(i < 0){
+        return -1;
+    }
+    return 0;
+}
+
+function calcV(a0, a1, a2, t){    
+    var k1 = (a2 -2*a1 + a0) / (2*(t)*(t));
+    var k2 = (a2 -4*a1 + 3*a0) / (2*(t));
+    
+    var result = k1/3*(-t)*(-t)*(-t) + k2/2*(-t)*(-t) + a0*(-t); 
+    
+    return - result;
+}
+
+function calcL(a0, a1, a2, v0, t){    
+    var k1 = (a2 -2*a1 + a0) / (2*(t)*(t));
+    var k2 = (a2 -4*a1 + 3*a0) / (2*(t));
+    
+    var result = k1/12*(-t)*(-t)*(-t)*(-t) + k2/6*(-t)*(-t)*(-t) + a0/2*(-t)*(-t) + v0*(-t); 
+    
+    return - result;
+}
 
 
 // Render callback
