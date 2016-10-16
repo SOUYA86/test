@@ -1,5 +1,9 @@
 (function() {
-    
+
+    //定数
+    var EYE_WIDTH = 20;
+
+
     var vx=0;
     var vy=0;
     var vz=0;
@@ -14,61 +18,100 @@
     var touchX=0;
     var touchY=0;
     var isMouseDown = false;
+    
+    var t=0;
+
 
 function init() {
 var scene = new THREE.Scene();
 
   var width  = 320;
   var height = 540/2;
-  var fov    = 60;
+  var fov    = 40;
   var aspect = width / height;
   var near   = 1;
   var far    = 10000;
-  var camera = new THREE.PerspectiveCamera( fov, aspect, near, far );
-  camera.position.set( 0, 0, 0 );
+  var cameraR = new THREE.PerspectiveCamera( fov, aspect, near, far );
+  cameraR.position.set( 0, +EYE_WIDTH, 0 );
+  var cameraL = new THREE.PerspectiveCamera( fov, aspect, near, far );
+  cameraL.position.set( 0, -EYE_WIDTH, 0 );
   var cameragroup = new THREE.Object3D();
-  //group.add( camera );
+  cameragroup.add( cameraR );
+  cameragroup.add( cameraL );
   scene.add( cameragroup );
   
 
-  var renderer1 = new THREE.WebGLRenderer();
-  renderer1.setSize( width, height );
-  document.body.appendChild( renderer1.domElement );
+  var rendererR = new THREE.WebGLRenderer( {antialias:true} );
+  rendererR.setSize( width, height );
+  rendererR.shadowMapEnabled = true;
+  document.body.appendChild( rendererR.domElement );
 
-  var renderer2 = new THREE.WebGLRenderer();
-  renderer2.setSize( width, height );
-  document.body.appendChild( renderer2.domElement );
+  var rendererL = new THREE.WebGLRenderer( {antialias:true} );
+  rendererL.setSize( width, height );
+  rendererL.shadowMap.enabled = true;
+  document.body.appendChild( rendererL.domElement );
 
 
-  var directionalLight = new THREE.DirectionalLight( 0xffffff );
-  directionalLight.position.set( 0, 0.7, 0.7 );
+  //環境光
+  var ambientLight = new THREE.AmbientLight( 0x222222 );
+  scene.add( ambientLight );
+
+  //太陽光
+  var directionalLight = new THREE.DirectionalLight( 0xffffff , 1 );
+  directionalLight.position.set( 0, 10000, 10000 );
+  directionalLight.castShadow = true;
   scene.add( directionalLight );
 
-  var geometry = new THREE.CubeGeometry( 20, 50, 5 );
-  var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
-  var mesh = new THREE.Mesh( geometry, material );
-  scene.add( mesh );
-  mesh.position.z = -100;
+  var Boxsize=50;
+  var NUM=80;
 
-  var geometry2 = new THREE.CubeGeometry( 4000, 4000, 5 );
-  var material2 = new THREE.MeshPhongMaterial( { color: 0x0000ff } );
-  var mesh2 = new THREE.Mesh( geometry2, material2 );
-  scene.add( mesh2 );
-  mesh2.position.y = 400;
-  mesh2.position.z = -400;
+  var geometry = new THREE.Geometry();
+  var geometry2 = new THREE.CubeGeometry( Boxsize, Boxsize, Boxsize*1 );
+  var material2 = new THREE.MeshPhongMaterial( { color: 0x0000ff } );  
+  var i;
+  var j;
+  
+  for(i=-NUM;i<=+NUM;i++){ 
+      for(j=-NUM;j<=+NUM;j++){
+            var z = Math.round((Math.random())-0.45)*Boxsize*((Math.random()*Math.random()*5+1));
+
+            if ( z > 0 ) {
+                var mesh2 = new THREE.Mesh( geometry2, material2 ); 
+                mesh2.position.x = i*Boxsize;
+                mesh2.position.y = j*Boxsize;
+                mesh2.position.z = z - Boxsize*15;
+                THREE.GeometryUtils.merge(geometry,mesh2);
+            }
+      }
+  }
+  
+  var obj = new THREE.Mesh( geometry, material2);
+  obj.castShadow = true;  
+  scene.add(obj);
+  
+  
+  var field = new THREE.Mesh( new THREE.CubeGeometry( Boxsize*NUM*2, Boxsize*NUM*2, 10 ), new THREE.MeshPhongMaterial( { color: 0xffffff } ));
+  field.position.z = -Boxsize*15 - 5;
+  field.castShadow = true;
+  field.receiveShadow = true;
+  scene.add(field);
+  
+
 
   window.addEventListener("deviceorientation", function(evt) {      
-    camera.rotation.order = "ZXY";
-    camera.rotation.x = evt.beta / 180 * Math.PI;
-    camera.rotation.y = evt.gamma / 180 * Math.PI;
-    camera.rotation.z = -evt.webkitCompassHeading / 180 * Math.PI;  //alphaだと端末からみた相対座標になるため変更
+    cameragroup.rotation.order = "ZXY";
+    cameragroup.rotation.x = evt.beta / 180.0 * Math.PI;
+    cameragroup.rotation.y = evt.gamma / 180.0 * Math.PI;
+    cameragroup.rotation.z = evt.alpha / 180.0 * Math.PI;
+    
+    //camera.rotation.z = -evt.webkitCompassHeading / 180 * Math.PI;  //alphaだと端末からみた相対座標になる
     }, true  
   );
 
   window.addEventListener("touchmove", function(e) {
     e.preventDefault();
-    camera.position.x = cameraX - ( e.touches[0].clientX - touchX ) /20;
-    camera.position.y = cameraY + ( e.touches[0].clientY - touchY ) /20;
+    cameragroup.position.x = cameraX - ( e.touches[0].clientX - touchX ) /20;
+    cameragroup.position.y = cameraY + ( e.touches[0].clientY - touchY ) /20;
     }, true
   );
 
@@ -93,9 +136,11 @@ var scene = new THREE.Scene();
 
   ( function renderLoop () {
     requestAnimationFrame( renderLoop );
-    renderer1.render( scene, camera );
-    renderer2.render( scene, camera );
-    camera.position.x += 0.1;
+    rendererR.render( scene, cameraR );
+    rendererL.render( scene, cameraL );
+    cameragroup.position.x = Math.sin(t/180*Math.PI) * 1000;
+    cameragroup.position.y = Math.cos(t/180*Math.PI) * 1000;
+    t = t+1;    
     } 
   )();
 }
