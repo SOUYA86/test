@@ -19,7 +19,7 @@ function init() {
 var scene = new THREE.Scene();
 
   var width  = 320;
-  var height = 460;
+  var height = 460 / 2;
   var fov    = 60;
   var aspect = width / height;
   var near   = 1;
@@ -31,9 +31,14 @@ var scene = new THREE.Scene();
   scene.add( cameragroup );
   
 
-  var renderer = new THREE.WebGLRenderer();
-  renderer.setSize( width, height );
-  document.body.appendChild( renderer.domElement );
+  var renderer1 = new THREE.WebGLRenderer();
+  renderer1.setSize( width, height );
+  document.body.appendChild( renderer1.domElement );
+
+  var renderer2 = new THREE.WebGLRenderer();
+  renderer2.setSize( width, height );
+  document.body.appendChild( renderer2.domElement );
+
 
   var directionalLight = new THREE.DirectionalLight( 0xffffff );
   directionalLight.position.set( 0, 0.7, 0.7 );
@@ -88,7 +93,8 @@ var scene = new THREE.Scene();
 
   ( function renderLoop () {
     requestAnimationFrame( renderLoop );
-    renderer.render( scene, camera );
+    renderer1.render( scene, camera );
+    renderer2.render( scene, camera );
     } 
   )();
 }
