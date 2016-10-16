@@ -95,6 +95,7 @@ var scene = new THREE.Scene();
     requestAnimationFrame( renderLoop );
     renderer1.render( scene, camera );
     renderer2.render( scene, camera );
+    camera.position.x += 0.1;
     } 
   )();
 }
